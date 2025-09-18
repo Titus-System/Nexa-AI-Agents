@@ -1,0 +1,51 @@
+# EditorConfig is awesome: http://EditorConfig.org
+# 1st version comes from a Gist by @avandrevitor [here](https://gist.github.com/avandrevitor/b917770334af3a43cf8c489f93287a84)
+#
+# Be aware that:
+# > Comments should go in individual lines, **we are not sure whether appending comments may cause issues**.
+# Emphasis added. [link](https://github.com/editorconfig/editorconfig/wiki/Syntax)
+#
+#
+# You can download this file
+# directly to your project from the command-line
+# curl -O https://gist.githubusercontent.com/WesleyGoncalves/ae64d95f663a15d8df455d1f0e5f7687/raw/.editorconfig
+
+# top-most EditorConfig file
+root = true
+
+# All PHP files MUST use the Unix LF (linefeed) line ending.
+# Code MUST use an indent of 4 spaces, and MUST NOT use tabs for indenting.
+# All PHP files MUST end with a single blank line.
+# There MUST NOT be trailing whitespace at the end of non-blank lines.
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# PHP-Files | Python | Java
+[*.{php,py,java}]
+indent_style = space
+indent_size = 4
+
+[{composer.json}]
+indent_style = space
+indent_size = 4
+
+# **NOT IMPLEMENTED BY editorConfig** PHP-Files. See [this for further information](https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties#ideas-for-domain-specific-properties)
+[{*.php}]
+curly_bracket_next_line = true
+indent_brace_style = K&R
+spaces_around_operators = true
+# block_comment_start = '/*'
+# block_comment_end = '*/'
+# line_comment = '//'
+
+# BLADE-Files | MD | HTML | LESS | SASS | CSS | JS | TS | JSON | ReST | YAML | TXT
+[*.{blade.php,md,html,less,sass,scss,css,js,ts,json,rst,y{a,}ml,txt}]
+indent_style = space
+indent_size = 2
+
+[{package.json}]
+indent_style = space
+indent_size = 2
