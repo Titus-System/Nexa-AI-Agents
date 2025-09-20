@@ -17,12 +17,15 @@ class Settings(BaseSettings):
     def REDIS_URL(self) -> str:
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/{self.REDIS_DB}"
 
+    NEXA_API: str = "http://localhost:5000"
+
+    LITELLM_REQUEST_TIMEOUT:int = 1800
+
     model_config = ConfigDict(
         env_file = ".env",
         env_file_encoding = "utf-8"
     )
 
-    NEXA_API: str = "http://localhost:5000"
 
 
 settings = Settings()
