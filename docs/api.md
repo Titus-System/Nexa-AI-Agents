@@ -67,6 +67,7 @@ O progresso e o resultado do processamento são enviados via Redis Pub/Sub no ca
 ```json
 {
   "status": "processing",
+  "job_id": "job-ajgldfgsaerg",
   "progress": {
     "current": 1,
     "total": 3,
@@ -85,6 +86,7 @@ O progresso e o resultado do processamento são enviados via Redis Pub/Sub no ca
 ```json
 {
   "status": "done",
+  "job_id": "job-ajgldfgsaerg",
   "result": {
     "ncm": "123456788",
     "description": "Descrição detalhada do produto",
@@ -106,6 +108,7 @@ O progresso e o resultado do processamento são enviados via Redis Pub/Sub no ca
 ```json
 {
   "status": "failed",
+  "job_id": "job-ajgldfgsaerg",
   "error": "Descrição do erro"
 }
 ```

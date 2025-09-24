@@ -11,6 +11,7 @@ class SingleClassificationRequest(BaseModel):
 
 
 class SingleClassification(BaseModel):
+    partnumber: Optional[str] = None
     ncm : Optional[str] = None
     description : Optional[str] = None
     exception : Optional[str] = None
@@ -23,6 +24,7 @@ class SingleClassification(BaseModel):
 
 class DoneProcessing(BaseModel):
     status: str = 'done'
+    job_id: str
     result: SingleClassification
 
 
@@ -34,9 +36,11 @@ class ProgressSchema(BaseModel):
 
 class UpdateProgressStatus(BaseModel):
     status: str = 'processing'
+    job_id: str
     progress: ProgressSchema
 
 
 class FailedProcessing(BaseModel):
     status: str = "failed"
+    job_id: str
     error: Optional[str] = None
