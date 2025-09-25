@@ -4,6 +4,7 @@ from smolagents import (
     LogLevel,
 )
 import yaml
+from agents.web_search_agent import web_agent
 from config import LITELLM_REQUEST_TIMEOUT
 
 ### TOOLS ---------------------------------------------------------------------------------------------------------
@@ -35,7 +36,9 @@ agent = CodeAgent(
     name="Manager",
     description="Coordinates product specification workflow by managing web search, description writing, and classification agents to transform part numbers into complete product data with technical specs, descriptions, and NCM-EX codes. Provide part number and supplier information as arguments.",
     model=model,
-    managed_agents=[],
+    managed_agents=[
+        web_agent,
+    ],
     tools=[],
     additional_authorized_imports=[
         "json",
