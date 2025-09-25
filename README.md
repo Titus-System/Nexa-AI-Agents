@@ -32,3 +32,9 @@ Principais dependências:
 Copie o arquivo `.env.example` para `.env` e altere os seus valores.
 
 Os valores recomendados estão definidos no arquivo `.env.example`.
+
+### Testar com um exemplo
+
+```py
+python src/example.py
+```
