@@ -14,7 +14,7 @@ def start_single_classification_job(data:SingleClassificationRequest, job_id:str
                 total = 3,
                 message = "Analisando dados no servidor Nexa-IA"
             )
-            redis_publisher.send_progress_update(data.progress_channel, job_id, progress_schema)
+            redis_publisher.send_progress_update(data.progress_channel, progress_schema)
 
         time.sleep(1)
         result = SingleClassification(
@@ -28,8 +28,8 @@ def start_single_classification_job(data:SingleClassificationRequest, job_id:str
             pais = "China",
             confidence_score = 0.98
         )
-        redis_publisher.send_done_classification(data.progress_channel, job_id, result)
+        redis_publisher.send_done_classification(data.progress_channel, result)
         return
     
     except Exception as e:
-        redis_publisher.send_failed_processing(data.progress_channel, job_id, str(e))
+        redis_publisher.send_failed_processing(data.progress_channel, str(e))

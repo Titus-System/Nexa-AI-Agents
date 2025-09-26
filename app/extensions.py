@@ -13,7 +13,7 @@ class RedisPublisher:
         self.redis_client = redis_client
 
 
-    def send_progress_update(self, channel: str, job_id: str, progress: ProgressSchema):
+    def send_progress_update(self, channel: str, progress: ProgressSchema, job_id:str = None):
         print(f"Enviando atualização de progresso para o canal {channel}")
         update = UpdateProgressStatus(
             status='processing',
@@ -23,7 +23,7 @@ class RedisPublisher:
         self.redis_client.publish(channel, json.dumps(update.model_dump()))
 
 
-    def send_done_classification(self, channel:str, job_id:str, result:SingleClassification):
+    def send_done_classification(self, channel:str, result:SingleClassification, job_id:str = None):
         print(f"Enviando resultado final para o canal {channel}")
         done_processing = DoneProcessing(
             status='done',
@@ -33,7 +33,7 @@ class RedisPublisher:
         self.redis_client.publish(channel, json.dumps(done_processing.model_dump()))
 
 
-    def send_failed_processing(self, channel:str, job_id:str, error:str):
+    def send_failed_processing(self, channel:str, error:str, job_id:str = None):
         print(f"Enviando falha de processamento para o canal {channel}")
         failed_processing = FailedProcessing(
             status = 'failed',
