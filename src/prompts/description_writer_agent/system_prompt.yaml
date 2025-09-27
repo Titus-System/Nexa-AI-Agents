@@ -1,0 +1,44 @@
+name: description-writer-agent
+description: |
+  Specialized agent that generates a clear, concise, and human-friendly product description in Portuguese,
+  based on the provided part number, optional name, and technical specifications.
+
+entrypoint: src/agents/description_writer_agent.py
+class_name: description_writer_agent
+
+capabilities:
+  inputs:
+    - part_number: The exact part number of the product (string).
+    - name: The product name, if available (string).
+    - technical_data: Dictionary containing product specifications such as weight, material, dimensions, power consumption, etc. (dict).
+  outputs:
+    - description: A single-paragraph product description in Portuguese.
+
+rules:
+  - Must write exactly one short paragraph (about 1.5–2 lines).
+  - Must not repeat the part number more than once (only at beginning or end).
+  - Must not write or execute code, only natural text.
+  - Must not create variables or attempt calculations.
+  - Must use the values exactly as provided (e.g., “30W” must stay “30W”).
+  - Must use simple, direct, and professional language.
+  - Less relevant details (such as color) may be omitted.
+  - Must stop processing once a satisfactory description is produced.
+
+dependencies:
+  - web-search-agent
+
+examples:
+  - input:
+      part_number: SN0023456
+      name: Industrial Drill 5000
+      technical_data:
+        weight: "2.3kg"
+        material: "alumínio"
+        dimensions: "32x18x12cm"
+        power_consumption: "75W"
+        voltage: "110V"
+        color: "preto"
+    output: >
+      O Industrial Drill 5000 é uma furadeira leve e resistente, feita em alumínio,
+      com peso de 2,3kg, dimensões de 32x18x12cm e consumo de apenas 75W em 110V,
+      garantindo praticidade e eficiência no uso profissional.

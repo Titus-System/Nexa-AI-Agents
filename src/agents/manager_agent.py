@@ -5,6 +5,7 @@ from smolagents import (
 )
 import yaml
 from agents.web_search_agent import web_agent
+from agents.description_writer_agent import description_agent
 from config import LITELLM_REQUEST_TIMEOUT
 
 ### TOOLS ---------------------------------------------------------------------------------------------------------
@@ -38,6 +39,7 @@ agent = CodeAgent(
     model=model,
     managed_agents=[
         web_agent,
+        description_agent,
     ],
     tools=[],
     additional_authorized_imports=[
