@@ -9,10 +9,17 @@
 
 ### Criação de um ambiente virtual
 
+
+#### No Linux ou macOS:
 ```sh
 python -m venv venv
+source venv/bin/activate
+```
 
-. venv/bin/activate
+#### No Windows:
+```sh
+python -m venv venv
+.\venv\Scripts\activate
 ```
 
 ### Instalar as dependências
