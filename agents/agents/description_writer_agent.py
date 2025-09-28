@@ -82,7 +82,7 @@ input_data = {
 Your goal is to generate a clear, engaging, and human-friendly description in Portuguese.
 
 ## Rules
-- Write exactly ONE short paragraph (about 1.5–2 lines).
+- Write exactly ONE short paragraph (about 1.5-2 lines).
 - Do NOT write or execute code. Only produce natural text.
 - Do NOT create variables or attempt calculations.
 - Use the values exactly as given (e.g., "30W" must stay "30W").
@@ -91,6 +91,7 @@ Your goal is to generate a clear, engaging, and human-friendly description in Po
 - You may omit less relevant details (e.g., color).
 - When you find a satisfactory answer, stop processing immediately.
 """
+
 
 ### EXECUTION FUNCTION --------------------------------------------------------------------------------------------
 def execute(

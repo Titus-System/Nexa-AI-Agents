@@ -1,6 +1,7 @@
 from flask import Flask
-from .config import settings
-from .routes import app_bp
+
+from app.config import settings
+from app.routes import app_bp
 
 
 def create_app():

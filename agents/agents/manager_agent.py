@@ -4,22 +4,33 @@ from smolagents import (
     LogLevel,
 )
 import yaml
-from agents.web_search_agent import web_agent
-from agents.description_writer_agent import description_agent
-from config import LITELLM_REQUEST_TIMEOUT
+from agents.agents.web_search_agent import web_agent
+from agents.agents.description_writer_agent import description_agent
+from agents.hooks.report import Report
+from agents.hooks.logger import log_step_to_file, log_progress
+from agents.config import LITELLM_REQUEST_TIMEOUT
+from schemas.api_schemas import SingleClassificationRequest
+
 
 ### TOOLS ---------------------------------------------------------------------------------------------------------
 
 
+### HOOKS ---------------------------------------------------------------------------------------------------------
+# send_progress = report.send_progress
+hook_log_progress = log_progress
+hook_log_step_to_file = log_step_to_file
+
+report = Report()
+
+
 ### SYSTEM PROMPT  ------------------------------------------------------------------------------------------------
-sprompt = "src/prompts/manager_agent/system_prompt.yaml"  # ~ 2k tokens
+sprompt = "agents/prompts/manager_agent/system_prompt.yaml"  # ~ 2k tokens
 with open(sprompt, "r") as stream:
     prompt_templates = yaml.safe_load(stream)
 
 
 ### AGENTS and Models -----------------------------------------------------------------------------------------------
 
-# Check whether the model uses roles (system, assistant, user) in messages. It should use for better performance.
 model_id = "ollama/llama3.1:8b"
 model_id = "ollama/qwen2.5:7b"
 model_id = "ollama/qwen2.5:14b"  # 128K context window
@@ -59,11 +70,13 @@ agent = CodeAgent(
     ],
     prompt_templates=prompt_templates,
     max_steps=5,
-    planning_interval=7,
-    verbosity_level=LogLevel.DEBUG,
+    verbosity_level=LogLevel.DEBUG,  # or OFF, ERROR, INFO, DEBUG
     return_full_result=True,
     provide_run_summary=True,
-    step_callbacks=[],
+    step_callbacks=[
+        hook_log_progress,
+        hook_log_step_to_file,
+    ],
 )
 
 
@@ -126,19 +139,44 @@ Begin by analyzing the input data and executing your planned workflow using your
 
 
 def execute(
-    part_number: str,
-    supplier: str,
-    additional_context: str | dict | list | None = None,
+    channel: str,
+    job_id: str,
+    data: SingleClassificationRequest,
     prompt: str | None = None,
 ) -> str:
+    from time import time
+
+    start = time()
+    with open("logs/output.log", "a") as file:
+        file.write(f"[{start}] Running manager.\n")
+
+    report.channel = channel
+    report.job_id = job_id
+
+    part_number = data["partnumber"]
+    supplier = data["supplier"] or ""
+    additional_context = {
+        k: v
+        for k, v in data.items()
+        if k not in ["partnumber", "supplier", "progress_channel"]
+    }
+
     if prompt is None:
         prompt = (
             PROMPT_TEMPLATE.replace("{{part_number}}", part_number)
             .replace("{{supplier}}", supplier)
-            .replace("{{additional_context}}", additional_context)
+            .replace("{{additional_context}}", str(additional_context))
         )
 
     ### VISUALIZE THE AGENTS STRUCTURE
     agent.visualize()
 
-    return agent(prompt)
+    response = agent(prompt)
+    report.send_successful_response(response)
+
+    end = time()
+    with open("logs/output.log", "a") as file:
+        file.write(f"[{end}] Response (manager): {response}\n")
+        file.write(f"Duration: {end - start}")
+
+    return response

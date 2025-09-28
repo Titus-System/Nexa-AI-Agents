@@ -7,9 +7,14 @@ from smolagents import (
     PythonInterpreterTool,
 )
 import yaml
-from config import LITELLM_REQUEST_TIMEOUT
-from tools.search_wikipedia import SearchWikipedia
-from prompts.web_search_agent.manufacturers import SEARCH_ADDRESSES, SITE_ADDRESSES
+from agents.config import LITELLM_REQUEST_TIMEOUT
+from agents.tools.search_wikipedia import SearchWikipedia
+from agents.prompts.web_search_agent.manufacturers import (
+    SEARCH_ADDRESSES,
+    SITE_ADDRESSES,
+)
+from agents.hooks.logger import log_step_to_file, log_progress
+
 
 ### TOOLS ---------------------------------------------------------------------------------------------------------
 duckduckgo = DuckDuckGoSearchTool()
@@ -17,8 +22,14 @@ visit_page = VisitWebpageTool()
 wikipedia = SearchWikipedia()
 
 
+### HOOKS ---------------------------------------------------------------------------------------------------------
+# send_progress = report.send_progress
+hook_log_progress = log_progress
+hook_log_step_to_file = log_step_to_file
+
+
 ### SYSTEM PROMPT  ------------------------------------------------------------------------------------------------
-sprompt = "src/prompts/web_search_agent/system_prompt.yaml"  # ~ 2k tokens
+sprompt = "agents/prompts/web_search_agent/system_prompt.yaml"  # ~ 2k tokens
 with open(sprompt, "r") as stream:
     prompt_templates = yaml.safe_load(stream)
 
@@ -39,7 +50,7 @@ model_web = LiteLLMModel(
     model_id=model_id,
     api_key="ollama",
     max_tokens=12000,
-    temperature=1,
+    temperature=0.8,
     timeout=LITELLM_REQUEST_TIMEOUT,
 )
 
@@ -68,13 +79,18 @@ web_agent = CodeAgent(
         "unicodedata",
         "time",
         "statistics",
+        "requests",
     ],
     prompt_templates=prompt_templates,
     verbosity_level=LogLevel.DEBUG,
-    max_steps=10,
+    max_steps=6,
     # grammar=None,
-    planning_interval=5,
+    planning_interval=4,
     return_full_result=True,  # Whether it should return the full result object (including intermediate thoughts, code, observations). Useful for debug.
+    step_callbacks=[
+        hook_log_progress,
+        hook_log_step_to_file,
+    ],
 )
 
 
