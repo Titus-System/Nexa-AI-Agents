@@ -24,7 +24,7 @@ class SingleClassification(BaseModel):
 
 class DoneProcessing(BaseModel):
     status: str = 'done'
-    job_id: str
+    job_id: str | None
     result: SingleClassification
 
 
@@ -36,11 +36,11 @@ class ProgressSchema(BaseModel):
 
 class UpdateProgressStatus(BaseModel):
     status: str = 'processing'
-    job_id: str
+    job_id: str | None
     progress: ProgressSchema
 
 
 class FailedProcessing(BaseModel):
     status: str = "failed"
-    job_id: str
+    job_id: str | None
     error: Optional[str] = None

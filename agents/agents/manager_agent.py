@@ -5,6 +5,7 @@ from smolagents import (
 )
 import yaml
 from agents.agents.web_search_agent import web_agent
+from agents.agents.description_writer_agent import description_agent
 from agents.hooks.report import Report
 from agents.hooks.logger import log_step_to_file, log_progress
 from agents.config import LITELLM_REQUEST_TIMEOUT
@@ -49,6 +50,7 @@ agent = CodeAgent(
     model=model,
     managed_agents=[
         web_agent,
+        description_agent,
     ],
     tools=[],
     additional_authorized_imports=[
