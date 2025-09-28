@@ -19,12 +19,12 @@ class SingleClassification(BaseModel):
     fabricante : Optional[str] = None
     endereco : Optional[str] = None
     pais : Optional[str] = None
-    confidence_score: Optional[float]
+    confidence_score: Optional[float] = None
 
 
 class DoneProcessing(BaseModel):
     status: str = 'done'
-    job_id: str | None
+    job_id: Optional[str] = None
     result: SingleClassification
 
 
@@ -36,11 +36,11 @@ class ProgressSchema(BaseModel):
 
 class UpdateProgressStatus(BaseModel):
     status: str = 'processing'
-    job_id: str | None
+    job_id: Optional[str] = None
     progress: ProgressSchema
 
 
 class FailedProcessing(BaseModel):
     status: str = "failed"
-    job_id: str | None
+    job_id: Optional[str] = None
     error: Optional[str] = None
