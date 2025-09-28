@@ -1,1 +1,1 @@
-from agents.manager_agent import execute as agent
+from agents.agents.manager_agent import execute as manager_agent
