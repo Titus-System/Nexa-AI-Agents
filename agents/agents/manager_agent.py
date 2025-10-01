@@ -153,11 +153,11 @@ def execute(
     report.channel = channel
     report.job_id = job_id
 
-    part_number = data["partnumber"]
-    supplier = data["supplier"] or ""
+    part_number = data.partnumber
+    supplier = data.supplier or ""
     additional_context = {
         k: v
-        for k, v in data.items()
+        for k, v in data.model_dump().items()
         if k not in ["partnumber", "supplier", "progress_channel"]
     }
 

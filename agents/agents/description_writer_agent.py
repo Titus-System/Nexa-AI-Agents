@@ -4,10 +4,10 @@ from smolagents import (
     LogLevel,
 )
 import yaml
-from config import LITELLM_REQUEST_TIMEOUT
+from agents.config import LITELLM_REQUEST_TIMEOUT
 
 ### SYSTEM PROMPT ------------------------------------------------------------------------------------------------
-sprompt = "src/prompts/description_writer_agent/system_prompt.yaml"  # ~ 2k tokens
+sprompt = "agents/prompts/description_writer_agent/system_prompt.yaml"  # ~ 2k tokens
 with open(sprompt, "r") as stream:
     prompt_templates = yaml.safe_load(stream)
 

@@ -21,6 +21,7 @@ def process_single_partnumber():
         print(e)
         return jsonify({"error": "payload inválido"}), 400
 
+    print("requisição recebida com sucesso")
     job_id = f"job-{uuid.uuid4()}"
 
     job_thread = Thread(target=start_single_classification_job, args=(data, job_id))
