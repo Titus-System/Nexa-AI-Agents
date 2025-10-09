@@ -9,7 +9,7 @@ data: SingleClassificationRequest = {
 }
 
 
-response = manager_agent(channel="foo", job_id=1, data=data)
+response = manager_agent(channel=None, job_id=1, data=data)
 
 
 print(
