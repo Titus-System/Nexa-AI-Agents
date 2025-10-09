@@ -5,10 +5,10 @@ from smolagents import (
     VisitWebpageTool,
     LogLevel,
     PythonInterpreterTool,
+    WikipediaSearchTool,
 )
 import yaml
 from agents.config import LITELLM_REQUEST_TIMEOUT
-from agents.tools.search_wikipedia import SearchWikipedia
 from agents.prompts.web_search_agent.manufacturers import (
     SEARCH_ADDRESSES,
     SITE_ADDRESSES,
@@ -19,7 +19,7 @@ from agents.hooks.logger import log_step_to_file, log_progress
 ### TOOLS ---------------------------------------------------------------------------------------------------------
 duckduckgo = DuckDuckGoSearchTool()
 visit_page = VisitWebpageTool()
-wikipedia = SearchWikipedia()
+wikipedia = WikipediaSearchTool()
 
 
 ### HOOKS ---------------------------------------------------------------------------------------------------------
