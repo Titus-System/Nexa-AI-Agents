@@ -5,6 +5,14 @@ from smolagents import (
 )
 import yaml
 from agents.config import LITELLM_REQUEST_TIMEOUT
+from agents.hooks.logger import log_step_to_file, log_progress
+
+
+### HOOKS ---------------------------------------------------------------------------------------------------------
+# send_progress = report.send_progress
+hook_log_progress = log_progress
+hook_log_step_to_file = log_step_to_file
+
 
 ### SYSTEM PROMPT ------------------------------------------------------------------------------------------------
 sprompt = "agents/prompts/description_writer_agent/system_prompt.yaml"  # ~ 2k tokens
@@ -43,6 +51,10 @@ description_agent = CodeAgent(
     max_steps=3,
     planning_interval=2,
     return_full_result=True,
+    step_callbacks=[
+        hook_log_progress,
+        hook_log_step_to_file,
+    ],
 )
 
 ### PROMPT TEMPLATE -----------------------------------------------------------------------------------------------
