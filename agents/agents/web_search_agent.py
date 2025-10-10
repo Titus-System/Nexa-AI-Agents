@@ -14,12 +14,14 @@ from agents.prompts.web_search_agent.manufacturers import (
     SITE_ADDRESSES,
 )
 from agents.hooks.logger import log_step_to_file, log_progress
+from agents.tools.pdfreader import PDFDatasheetReaderTool
 
 
 ### TOOLS ---------------------------------------------------------------------------------------------------------
 duckduckgo = DuckDuckGoSearchTool()
 visit_page = VisitWebpageTool()
 wikipedia = WikipediaSearchTool()
+pdfreader = PDFDatasheetReaderTool()
 
 
 ### HOOKS ---------------------------------------------------------------------------------------------------------
@@ -66,9 +68,11 @@ web_agent = CodeAgent(
             additional_authorized_imports=["bs4", "lxml"],
             description="Execute Python code. Use BeautifulSoup (from bs4 import BeautifulSoup) for web scraping and HTML parsing. Example: parse HTML content with BeautifulSoup(html_content, 'html.parser')",
         ),
+        pdfreader,
     ],
     additional_authorized_imports=[
         "bs4",
+        "wikipediaapi",
         "json",
         "pydantic",
         "collections",
