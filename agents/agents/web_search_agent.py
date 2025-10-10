@@ -62,7 +62,10 @@ web_agent = CodeAgent(
         duckduckgo,
         visit_page,
         wikipedia,
-        PythonInterpreterTool(additional_authorized_imports=["bs4", "lxml"]),
+        PythonInterpreterTool(
+            additional_authorized_imports=["bs4", "lxml"],
+            description="Execute Python code. Use BeautifulSoup (from bs4 import BeautifulSoup) for web scraping and HTML parsing. Example: parse HTML content with BeautifulSoup(html_content, 'html.parser')",
+        ),
     ],
     additional_authorized_imports=[
         "bs4",
