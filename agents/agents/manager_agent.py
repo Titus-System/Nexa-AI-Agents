@@ -8,7 +8,7 @@ from agents.agents.web_search_agent import web_agent
 from agents.agents.description_writer_agent import description_agent
 from agents.hooks.report import Report
 from agents.hooks.logger import log_step_to_file, log_progress
-from agents.config import LITELLM_REQUEST_TIMEOUT
+from agents.config import LITELLM_REQUEST_TIMEOUT, OLLAMA_URI
 from schemas.api_schemas import SingleClassificationRequest
 
 
@@ -36,6 +36,7 @@ model_id = "ollama/qwen2.5:7b"
 model_id = "ollama/qwen2.5:14b"  # 128K context window
 model = LiteLLMModel(
     model_id=model_id,
+    api_base=OLLAMA_URI,
     api_key="ollama",
     name="manager",
     max_tokens=12000,

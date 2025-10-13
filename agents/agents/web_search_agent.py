@@ -8,7 +8,7 @@ from smolagents import (
     WikipediaSearchTool,
 )
 import yaml
-from agents.config import LITELLM_REQUEST_TIMEOUT
+from agents.config import LITELLM_REQUEST_TIMEOUT, OLLAMA_URI
 from agents.prompts.web_search_agent.manufacturers import (
     SEARCH_ADDRESSES,
     SITE_ADDRESSES,
@@ -51,6 +51,7 @@ model_web = LiteLLMModel(
     name="web_search",
     model_id=model_id,
     api_key="ollama",
+    api_base=OLLAMA_URI,
     max_tokens=12000,
     temperature=0.8,
     timeout=LITELLM_REQUEST_TIMEOUT,

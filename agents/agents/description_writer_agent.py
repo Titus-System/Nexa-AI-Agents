@@ -4,7 +4,7 @@ from smolagents import (
     LogLevel,
 )
 import yaml
-from agents.config import LITELLM_REQUEST_TIMEOUT
+from agents.config import LITELLM_REQUEST_TIMEOUT, OLLAMA_URI
 from agents.hooks.logger import log_step_to_file, log_progress
 
 
@@ -30,6 +30,7 @@ model_desc = LiteLLMModel(
     name="description_writer",
     model_id=model_id,
     api_key="ollama",
+    api_base=OLLAMA_URI,
     max_tokens=4000,
     temperature=0.5,
     timeout=LITELLM_REQUEST_TIMEOUT,
