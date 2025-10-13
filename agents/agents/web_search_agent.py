@@ -9,10 +9,7 @@ from smolagents import (
 )
 import yaml
 from agents.config import LITELLM_REQUEST_TIMEOUT, OLLAMA_URI
-from agents.prompts.web_search_agent.manufacturers import (
-    SEARCH_ADDRESSES,
-    SITE_ADDRESSES,
-)
+from agents.prompts.web_search_agent.sources import SPECIALIZED_SITES
 from agents.hooks.logger import log_step_to_file, log_progress
 from agents.tools.pdfreader import PDFDatasheetReaderTool
 
@@ -36,10 +33,8 @@ with open(sprompt, "r") as stream:
     prompt_templates = yaml.safe_load(stream)
 
 # Replace the manufacturer's sites placeholders
-prompt_templates["system_prompt"] = (
-    prompt_templates["system_prompt"]
-    .replace("{{manufacturer_sites}}", str(list(SITE_ADDRESSES.values())).strip("[]"))
-    .replace("{{direct_search_urls}}", str(list(SEARCH_ADDRESSES.values())).strip("[]"))
+prompt_templates["system_prompt"] = prompt_templates["system_prompt"].replace(
+    "{{specialized_sites}}", str(list(SPECIALIZED_SITES.values())).strip("[]")
 )
 
 
@@ -53,7 +48,7 @@ model_web = LiteLLMModel(
     api_key="ollama",
     api_base=OLLAMA_URI,
     max_tokens=12000,
-    temperature=0.8,
+    temperature=0.6,
     timeout=LITELLM_REQUEST_TIMEOUT,
 )
 
@@ -91,9 +86,9 @@ web_agent = CodeAgent(
     ],
     prompt_templates=prompt_templates,
     verbosity_level=LogLevel.DEBUG,
-    max_steps=6,
+    max_steps=8,
     # grammar=None,
-    planning_interval=4,
+    # planning_interval=0,
     return_full_result=True,  # Whether it should return the full result object (including intermediate thoughts, code, observations). Useful for debug.
     step_callbacks=[
         hook_log_progress,
