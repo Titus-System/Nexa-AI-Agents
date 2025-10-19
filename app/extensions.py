@@ -1,7 +1,7 @@
 from flask import json
 import redis
 
-from schemas.api_schemas import DoneProcessing, FailedProcessing, ProgressSchema, SingleClassification, UpdateProgressStatus
+from schemas.api_schemas import DoneProcessing, FailedProcessing, PartialResult, ProgressSchema, SingleClassification, UpdateProgressStatus
 from .config import settings
 
 
@@ -21,6 +21,27 @@ class RedisPublisher:
             progress=progress
         )
         self.redis_client.publish(channel, json.dumps(update.model_dump()))
+
+
+    def send_partial_result(self, channel:str, result: SingleClassification, job_id:str, current:int, total:int, message:str):
+        print(f"Enviando resultado parcial para o canal {channel}")
+        payload = PartialResult(
+            status = "partial_result",
+            job_id = job_id,
+            current = current, 
+            total = total,
+            message = message,
+            single_classification=result
+        )
+        self.redis_client.publish(channel, json.dumps(payload.model_dump()))
+        pass
+
+    def send_done_job(self, channel:str, job_id:str):
+        payload = {
+            "status": "done",
+            "job_id": job_id
+        }
+        self.redis_client.publish(channel, json.dumps(payload))
 
 
     def send_done_classification(self, channel:str, result:SingleClassification, job_id:str = None):

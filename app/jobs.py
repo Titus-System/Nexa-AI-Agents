@@ -1,6 +1,8 @@
 import time
 
+from app.simul import run_batch_simul, run_single_simul
 from schemas.api_schemas import (
+    BatchClassificationRequest,
     ProgressSchema,
     SingleClassification,
     SingleClassificationRequest,
@@ -54,46 +56,8 @@ def start_single_classification_job(data: SingleClassificationRequest, job_id: s
 
 
 def run_demo(data: SingleClassificationRequest, job_id: str):
-    print(
-        f"Iniciando job para partnumber {data.partnumber} no canal {data.progress_channel}"
-    )
+    run_single_simul(data, job_id)
 
-    messages = {
-        0: "Pedido de análise recebido",
-        1: "Iniciando análise de partnumber com agente Nexa-IA",
-        2: "Buscando informações técnicas do partnumber",
-        3: "Buscando informações técnicas do partnumber",
-        4: "Gerando descrição do produto",
-        5: "Finalizando descrição do produto"
-    }
 
-    try:
-        if data.partnumber != "BC846ALT1G":
-            redis_publisher.send_failed_processing(data.progress_channel, str(e))
-
-        for i in range(6):
-            progress_schema = ProgressSchema(
-                current=i, total=5, message=messages.get(i)
-            )
-            redis_publisher.send_progress_update(data.progress_channel, progress_schema)
-            if i < 6: time.sleep(4)
-            else: time.sleep(3)
-
-        time.sleep(5)
-        result = SingleClassification(
-            partnumber=data.partnumber,
-            ncm="--",
-            description="""transistores de silício NPN de uso geral, apresentados em um invólucro SOT-23. Esses componentes operam com uma corrente de coletor contínua de até 100 mAdc e possuem diferentes classificações de tensão coletor-emissor (VCEO) que variam de 30 V a 65 V, dependendo do modelo específico dentro da série. Projetados para funcionar em uma ampla faixa de temperatura de junção de -55°C a +150°C , eles oferecem uma dissipação de potência total de 225 mW em uma placa FR-5. O ganho de corrente DC (h FE), sob uma tensão de coletor-emissor de 5.0 V e uma corrente de coletor de 2.0 mA, varia entre 110 e 800, dependendo da classificação do componente. A série apresenta um produto de ganho de largura de banda (fT) de no mínimo 100 MHz em uma corrente de coletor de 10 mA.""",
-            exception="--",
-            nve="--",
-            fabricante="onsemi",
-            endereco="--",
-            pais="--",
-            confidence_score=0.95,
-        )
-        redis_publisher.send_done_classification(data.progress_channel, result)
-        return
-
-    except Exception as e:
-        redis_publisher.send_failed_processing(data.progress_channel, str(e))
-    return
+def start_batch_classification_job(data: BatchClassificationRequest, job_id: str):
+    run_batch_simul(data, job_id)

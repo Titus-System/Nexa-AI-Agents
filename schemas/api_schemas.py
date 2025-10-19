@@ -9,6 +9,10 @@ class SingleClassificationRequest(BaseModel):
     manufacturer: Optional[str] = None
     supplier: Optional[str] = None
 
+class BatchClassificationRequest(BaseModel):
+    progress_channel: str
+    partnumbers: list[str]
+
 
 class SingleClassification(BaseModel):
     partnumber: Optional[str] = None
@@ -38,6 +42,15 @@ class UpdateProgressStatus(BaseModel):
     status: str = 'processing'
     job_id: Optional[str] = None
     progress: ProgressSchema
+
+
+class PartialResult(BaseModel):
+    status:str = "partial_result"
+    job_id: Optional[str] = None
+    current: int
+    total: int
+    message: str
+    single_classification: SingleClassification
 
 
 class FailedProcessing(BaseModel):
