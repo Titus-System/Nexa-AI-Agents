@@ -9,8 +9,8 @@ from .extensions import redis_publisher
 
 
 pre_proc = {
-    "BC846ALT1G": SingleClassification(
-        partnumber="BC846ALT1G",
+    "BC847BLT1G": SingleClassification(
+        partnumber="BC847BLT1G",
         ncm="85412120",
         description="""transistores de silício NPN de uso geral, apresentados em um invólucro SOT-23. Esses componentes operam com uma corrente de coletor contínua de até 100 mAdc e possuem diferentes classificações de tensão coletor-emissor (VCEO) que variam de 30 V a 65 V, dependendo do modelo específico dentro da série. Projetados para funcionar em uma ampla faixa de temperatura de junção de -55°C a +150°C , eles oferecem uma dissipação de potência total de 225 mW em uma placa FR-5. O ganho de corrente DC (h FE), sob uma tensão de coletor-emissor de 5.0 V e uma corrente de coletor de 2.0 mA, varia entre 110 e 800, dependendo da classificação do componente. A série apresenta um produto de ganho de largura de banda (fT) de no mínimo 100 MHz em uma corrente de coletor de 10 mA.""",
         exception="00",
