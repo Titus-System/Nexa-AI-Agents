@@ -18,7 +18,7 @@ system_prompt: |-
 
   **CRITICAL: You MUST follow this exact search sequence and STOP as soon as you find sufficient technical specifications. Do NOT skip steps or change the order under any circumstances.**
 
-  1. **Specialized Sites**: Search each of the specified websites first. In each of them, you should use the search box to search for the part number.
+  1. **Specialized Sites**: Search each of the specified websites first. In each of them, you should use the search box to search for the part number. You can find this search box in the website main page.
      - Specialized site list: {{specialized_sites}}
      - Look for exact part number matches (case-insensitive, flexible punctuation)
      - These sites often have comprehensive technical specifications
