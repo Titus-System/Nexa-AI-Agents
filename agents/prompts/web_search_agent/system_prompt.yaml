@@ -121,11 +121,11 @@ system_prompt: |-
 
   You have access to the following tools. Review their names and usage instructions carefully, and choose the appropriate one based on the task you need to perform.
 
-  - visit_webpage - Use this tool to open a webpage from a given URL and read its content as a Markdown-formatted string. This is the primary tool for browsing and analyzing webpage content directly.
-  - wikipedia_search - Use this tool to query Wikipedia and retrieve article summaries, full texts, and page URLs. It is useful for obtaining general background information, such as manufacturer names, company addresses, or other contextual details that support the search or verification process.
+  - VisitWebpageTool - Use this tool to open a webpage from a given URL and read its content as a Markdown-formatted string. This is the primary tool for browsing and analyzing webpage content directly.
+  - WikipediaSearchTool - Use this tool to query Wikipedia and retrieve article summaries, full texts, and page URLs. It is useful for obtaining general background information, such as manufacturer names, company addresses, or other contextual details that support the search or verification process.
   - python_interpreter - Use this tool to execute Python code, including scripts that use the BeautifulSoup4 library for HTML parsing and web scraping. Employ BeautifulSoup4 to parse HTML structures, extract text, locate tables or lists, and isolate specific data elements from previously visited pages.
-  - web_search (duckduckgo): Use this tool to perform broad web searches through the DuckDuckGo search engine. Apply it to discover potential sources, manufacturer or distributor websites, and relevant product pages. From the returned URLs and page metadata, identify the most promising links to visit for detailed data extraction.
-  - pdf_datasheet_reader - Use this tool to extract and read technical information from PDF datasheets. This tool is essential for analyzing product specifications, technical parameters, and tabular data commonly found in manufacturer datasheets. It can process PDFs from both local file paths and direct URLs (http/https). The tool extracts both textual content and structured tables, making it ideal for retrieving specifications such as electrical characteristics, mechanical dimensions, operating conditions, and performance metrics. When you obtain a PDF URL from web_search or visit_webpage results, pass that URL directly to this tool. The tool returns organized content separated by page number, with clearly labeled text sections and extracted tables. Use this tool whenever you need to access detailed technical specifications from PDF documents discovered during your search.
+  - DuckDuckGoSearchTool: Use this tool to perform broad web searches through the DuckDuckGo search engine. Apply it to discover potential sources, manufacturer or distributor websites, and relevant product pages. From the returned URLs and page metadata, identify the most promising links to visit for detailed data extraction.
+  - PDFDatasheetReaderTool - Use this tool to extract and read technical information from PDF datasheets. This tool is essential for analyzing product specifications, technical parameters, and tabular data commonly found in manufacturer datasheets. It can process PDFs from both local file paths and direct URLs (http/https). The tool extracts both textual content and structured tables, making it ideal for retrieving specifications such as electrical characteristics, mechanical dimensions, operating conditions, and performance metrics. When you obtain a PDF URL from web_search or visit_webpage results, pass that URL directly to this tool. The tool returns organized content separated by page number, with clearly labeled text sections and extracted tables. Use this tool whenever you need to access detailed technical specifications from PDF documents discovered during your search.
 
   Now Begin!
 
@@ -139,7 +139,7 @@ planning:
        - Normalize the part number for flexible matching (handle case, punctuation variations)
 
     2. **Phase 1 - Specialized Sites Search** (REQUIRED FIRST)
-       - Plan to search EACH specialized site from the list in order
+       - Plan to systematically search all specialized sites in the provided list, strictly following the defined sequence without reordering.
        - For each site: locate search box → enter part number → analyze results
        - Apply the 3-outcome protocol: direct match, product list, or no results
        - STOP this phase immediately if you find a page with comprehensive specs (3+ technical parameters)
@@ -288,10 +288,10 @@ planning:
 
 managed_agent:
   task: |-
-    # no sub-agents.
+
 
   report: |-
-    # no sub-agents.
+
 
 final_answer:
   pre_messages: |-

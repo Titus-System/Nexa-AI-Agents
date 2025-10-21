@@ -39,8 +39,6 @@ prompt_templates["system_prompt"] = prompt_templates["system_prompt"].replace(
 
 
 ### AGENTS and Models -----------------------------------------------------------------------------------------------
-model_id = "ollama/llama3.1:8b"
-model_id = "ollama/qwen2.5:7b"
 model_id = "ollama/qwen2.5:14b"
 model_web = LiteLLMModel(
     name="web_search",
@@ -86,9 +84,9 @@ web_agent = CodeAgent(
     ],
     prompt_templates=prompt_templates,
     verbosity_level=LogLevel.DEBUG,
-    max_steps=8,
+    max_steps=10,
     # grammar=None,
-    # planning_interval=0,
+    planning_interval=6,
     return_full_result=True,  # Whether it should return the full result object (including intermediate thoughts, code, observations). Useful for debug.
     step_callbacks=[
         hook_log_progress,

@@ -31,8 +31,8 @@ with open(sprompt, "r") as stream:
 
 ### AGENTS and Models -----------------------------------------------------------------------------------------------
 
-model_id = "ollama/llama3.1:8b"
-model_id = "ollama/qwen2.5:7b"
+# Check whether the model uses roles (system, assistant, user) in messages. It should use for better performance.
+
 model_id = "ollama/qwen2.5:14b"  # 128K context window
 model = LiteLLMModel(
     model_id=model_id,
@@ -70,8 +70,8 @@ agent = CodeAgent(
         "stat",
     ],
     prompt_templates=prompt_templates,
-    max_steps=5,
-    verbosity_level=LogLevel.DEBUG,  # or OFF, ERROR, INFO, DEBUG
+    max_steps=8,
+    verbosity_level=LogLevel.DEBUG,
     return_full_result=True,
     provide_run_summary=True,
     step_callbacks=[
@@ -149,7 +149,7 @@ def execute(
 
     start = time()
     with open("logs/output.log", "a") as file:
-        file.write(f"[{start}] Running manager.\n")
+        file.write(f"[{start}] Start Running manager.\n")
 
     report.channel = channel
     report.job_id = job_id
@@ -178,7 +178,7 @@ def execute(
 
     end = time()
     with open("logs/output.log", "a") as file:
-        file.write(f"[{end}] Response (manager): {response}\n")
+        file.write(f"[{end}] Finish Response (manager): {response}\n")
         file.write(f"Duration: {end - start}")
 
     return response

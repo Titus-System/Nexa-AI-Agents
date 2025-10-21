@@ -22,8 +22,6 @@ with open(sprompt, "r") as stream:
 
 ### MODEL ---------------------------------------------------------------------------------------------------------
 # Use the same model config style as manager/web agents
-# model_id = "ollama/llama3.1:8b"
-# model_id = "ollama/qwen2.5:7b"
 model_id = "ollama/qwen2.5:14b"
 
 model_desc = LiteLLMModel(
