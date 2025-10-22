@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     NEXA_API: str = "http://localhost:5000"
 
     LITELLM_REQUEST_TIMEOUT: int = 1800
+    OLLAMA_URI: str = "http://127.0.0.1:11434"
     OLLAMA_NUM_PARALLEL: int = 4
 
     model_config = ConfigDict(env_file=".env", env_file_encoding="utf-8")
