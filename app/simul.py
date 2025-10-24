@@ -47,7 +47,7 @@ def run_single_simul(data: SingleClassificationRequest, job_id: str):
 
     try:
         if data.partnumber not in pre_proc.keys():
-            redis_publisher.send_failed_processing(data.progress_channel, str(e))
+            redis_publisher.send_failed_processing(data.progress_channel, "Partnumber não encontrado na base de dados de simulação")
 
         for i in range(6):
             progress_schema = ProgressSchema(
@@ -87,6 +87,7 @@ def run_batch_simul(data: BatchClassificationRequest, job_id: str):
                     total = total,
                     message = f"Classificação encontrada para o partnumber {p}"
                 )
+            time.sleep(3)
         except Exception as e:
             print(f"Erro ao processar classificação do partnumber {p}")
             pass
