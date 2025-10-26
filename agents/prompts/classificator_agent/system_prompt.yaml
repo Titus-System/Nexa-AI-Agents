@@ -134,6 +134,13 @@ planning:
     - Define the next concrete steps (e.g., re-query with a refined description, format output)
     - Ensure the new plan stays within your allowed tools and protocol
 
+managed_agent:
+  task: |-
+
+
+  report: |-
+
+
 final_answer:
   pre_messages: |-
     Before calling `final_answer`, confirm:

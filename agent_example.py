@@ -12,9 +12,7 @@ data: SingleClassificationRequest = {
 response = manager_agent(channel=None, job_id=1, data=data)
 
 
-print(
-    "============================================================================================================="
-)
+print("=" * 100)
 print("FINISHED")
 print("Result: ")
 print(response)
