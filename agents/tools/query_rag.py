@@ -11,7 +11,7 @@ N_RESULTS = 5
 
 
 @tool
-def query_chroma(query_text):
+def query_chroma(query_text: str) -> list[dict]:
     """
     Query the Chroma database for the most semantically similar technical product specifications in Portuguese.
 

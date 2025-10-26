@@ -6,7 +6,7 @@ from smolagents import (
 import yaml
 from agents.config import LITELLM_REQUEST_TIMEOUT, OLLAMA_URI
 from agents.hooks.logger import log_step_to_file, log_progress
-from tools.query_rag import query_chroma
+from agents.tools.query_rag import query_chroma
 
 ### TOOLS ---------------------------------------------------------------------------------------------------------
 chroma = query_chroma
