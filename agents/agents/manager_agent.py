@@ -8,7 +8,7 @@ from agents.agents.web_search_agent import web_agent
 from agents.agents.description_writer_agent import description_agent
 from agents.hooks.report import Report
 from agents.hooks.logger import log_step_to_file, log_progress
-from agents.config import LITELLM_REQUEST_TIMEOUT
+from agents.config import LITELLM_REQUEST_TIMEOUT, OLLAMA_URI
 from schemas.api_schemas import SingleClassificationRequest
 
 
@@ -31,11 +31,12 @@ with open(sprompt, "r") as stream:
 
 ### AGENTS and Models -----------------------------------------------------------------------------------------------
 
-model_id = "ollama/llama3.1:8b"
-model_id = "ollama/qwen2.5:7b"
+# Check whether the model uses roles (system, assistant, user) in messages. It should use for better performance.
+
 model_id = "ollama/qwen2.5:14b"  # 128K context window
 model = LiteLLMModel(
     model_id=model_id,
+    api_base=OLLAMA_URI,
     api_key="ollama",
     name="manager",
     max_tokens=12000,
@@ -69,8 +70,8 @@ agent = CodeAgent(
         "stat",
     ],
     prompt_templates=prompt_templates,
-    max_steps=5,
-    verbosity_level=LogLevel.DEBUG,  # or OFF, ERROR, INFO, DEBUG
+    max_steps=8,
+    verbosity_level=LogLevel.DEBUG,
     return_full_result=True,
     provide_run_summary=True,
     step_callbacks=[
@@ -148,24 +149,25 @@ def execute(
 
     start = time()
     with open("logs/output.log", "a") as file:
-        file.write(f"[{start}] Running manager.\n")
+        file.write(f"[{start}] Start Running manager.\n")
 
     report.channel = channel
     report.job_id = job_id
 
-    part_number = data.partnumber
-    supplier = data.supplier or ""
-    additional_context = {
-        k: v
-        for k, v in data.model_dump().items()
-        if k not in ["partnumber", "supplier", "progress_channel"]
-    }
+    part_number = data["partnumber"]
+    supplier = data["supplier"] or ""
+    # additional_context = {
+    #     k: v
+    #     for k, v in data.items()
+    #     if k not in ["partnumber", "supplier", "progress_channel"]
+    # }
 
     if prompt is None:
         prompt = (
-            PROMPT_TEMPLATE.replace("{{part_number}}", part_number)
-            .replace("{{supplier}}", supplier)
-            .replace("{{additional_context}}", str(additional_context))
+            PROMPT_TEMPLATE.replace("{{part_number}}", part_number).replace(
+                "{{supplier}}", supplier
+            )
+            # .replace("{{additional_context}}", str(additional_context))
         )
 
     ### VISUALIZE THE AGENTS STRUCTURE
@@ -176,7 +178,7 @@ def execute(
 
     end = time()
     with open("logs/output.log", "a") as file:
-        file.write(f"[{end}] Response (manager): {response}\n")
+        file.write(f"[{end}] Finish Response (manager): {response}\n")
         file.write(f"Duration: {end - start}")
 
     return response

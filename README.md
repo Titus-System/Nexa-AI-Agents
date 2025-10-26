@@ -33,6 +33,7 @@ Principais dependências:
 - pydantic
 - ollama - para execução dos modelos localmente.
 - beautifulsoup4 - para pesquisas na web.
+- wikipedia api
 
 Servidor web:
 

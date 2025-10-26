@@ -4,7 +4,15 @@ from smolagents import (
     LogLevel,
 )
 import yaml
-from agents.config import LITELLM_REQUEST_TIMEOUT
+from agents.config import LITELLM_REQUEST_TIMEOUT, OLLAMA_URI
+from agents.hooks.logger import log_step_to_file, log_progress
+
+
+### HOOKS ---------------------------------------------------------------------------------------------------------
+# send_progress = report.send_progress
+hook_log_progress = log_progress
+hook_log_step_to_file = log_step_to_file
+
 
 ### SYSTEM PROMPT ------------------------------------------------------------------------------------------------
 sprompt = "agents/prompts/description_writer_agent/system_prompt.yaml"  # ~ 2k tokens
@@ -14,14 +22,13 @@ with open(sprompt, "r") as stream:
 
 ### MODEL ---------------------------------------------------------------------------------------------------------
 # Use the same model config style as manager/web agents
-# model_id = "ollama/llama3.1:8b"
-# model_id = "ollama/qwen2.5:7b"
 model_id = "ollama/qwen2.5:14b"
 
 model_desc = LiteLLMModel(
     name="description_writer",
     model_id=model_id,
     api_key="ollama",
+    api_base=OLLAMA_URI,
     max_tokens=4000,
     temperature=0.5,
     timeout=LITELLM_REQUEST_TIMEOUT,
@@ -43,6 +50,10 @@ description_agent = CodeAgent(
     max_steps=3,
     planning_interval=2,
     return_full_result=True,
+    step_callbacks=[
+        hook_log_progress,
+        hook_log_step_to_file,
+    ],
 )
 
 ### PROMPT TEMPLATE -----------------------------------------------------------------------------------------------
