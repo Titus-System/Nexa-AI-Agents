@@ -104,7 +104,7 @@ O **Agente de Classificação NCM** é responsável por classificar o partnumber
 
 - 5º o agente retorna esses **5 NCMs** para o **manager_agent**.
 
-#### 2.2 Ferramentas do Agente
+#### 4.2.2 Ferramentas do Agente
 
 - **sentence_transformers**: Gera **embeddings** a partir das descrições técnicas dos produtos.
 - **Chromadb**: Banco de dados vetorial que armazena os embeddings dos NCMs e realiza consultas para encontrar os mais semelhantes.
