@@ -2,10 +2,13 @@ from smolagents import (
     CodeAgent,
     LiteLLMModel,
     LogLevel,
+    # EMPTY_PROMPT_TEMPLATES,
+    # PromptTemplates,
 )
 import yaml
 from agents.agents.web_search_agent import web_agent
 from agents.agents.description_writer_agent import description_agent
+from agents.agents.classificator_agent import classificator_agent
 from agents.hooks.report import Report
 from agents.hooks.logger import log_step_to_file, log_progress
 from agents.config import LITELLM_REQUEST_TIMEOUT, OLLAMA_URI
@@ -28,19 +31,30 @@ sprompt = "agents/prompts/manager_agent/system_prompt.yaml"  # ~ 2k tokens
 with open(sprompt, "r") as stream:
     prompt_templates = yaml.safe_load(stream)
 
+# # Load the smolagents Empty Prompt Template
+# prompt_templates: PromptTemplates = EMPTY_PROMPT_TEMPLATES
+
 
 ### AGENTS and Models -----------------------------------------------------------------------------------------------
 
 # Check whether the model uses roles (system, assistant, user) in messages. It should use for better performance.
-
+model_id = "ollama/llama3.1:8b"
+model_id = "ollama/qwen2.5:7b"
 model_id = "ollama/qwen2.5:14b"  # 128K context window
 model = LiteLLMModel(
     model_id=model_id,
     api_base=OLLAMA_URI,
     api_key="ollama",
     name="manager",
-    max_tokens=12000,
-    temperature=0.2,
+    max_tokens=12000,  # maximum output length you want the model to generate.
+    temperature=0.2,  #
+    # top_k= ,  # Model considers only the top K most likely tokens at each step. 1 to model's number of tokens. Creative writing (top_k=50+), deterministic output (top_k=1).
+    # top_p= ,  # Model considers only the *smallest* set of tokens whose cumulative probability ≥ p. Range: 0.0 → 1.0. So, 1.0 will consider all the set of tokens, and 0.5 will consider the smallest set containing all the highest-probability tokens whose cumulative probability >= 0.5.
+    # flatten_messages_as_text=False,  # Flattens structured message objects to plain text in some cases. I.e. combining them rather than preserving role/message-structure.
+    # custom_role_conversions=None, # mapping to convert message roles. For example, if a model doesn’t understand role “system” or “assistant”, you can remap them. This lets you map messages roles appropriately so that prompts are interpreted correctly.
+    # repeat_penalty=1.1, # Penalizes tokens that were already used in the context window. 1.0 = stronger penalty (less repetition).
+    # presence_penalty= , # discourages repeating ideas already mentioned (helps encourage new topics). Positive values = more novelty.
+    # frequency_penalty= , #
     timeout=LITELLM_REQUEST_TIMEOUT,
 )
 
@@ -52,9 +66,13 @@ agent = CodeAgent(
     managed_agents=[
         web_agent,
         description_agent,
+        classificator_agent,
     ],
-    tools=[],
+    tools=[
+        # uses final_answer internally
+    ],
     additional_authorized_imports=[
+        # libraries the agent is allowed to use
         "json",
         "pydantic",
         "random",
@@ -69,15 +87,20 @@ agent = CodeAgent(
         "queue",
         "stat",
     ],
-    prompt_templates=prompt_templates,
-    max_steps=8,
-    verbosity_level=LogLevel.DEBUG,
-    return_full_result=True,
-    provide_run_summary=True,
+    prompt_templates=prompt_templates,  # Determines how instructions / tools / structure are presented to the LLM.
+    # instructions= ,   # Custom instructions string to be injected in the system prompt. Helps guide behavior (tell it what goals are, constraints, style).
+    max_steps=8,  # Maximum number of steps (ReAct cycle) the agent can take (Thought -> Act -> Observation). Avoid infinity loops.
+    # planning_interval=7,  # Planning steps allow the agent to review what has been done / what remains, perhaps adjust its next steps, which can be useful for more complex tasks. Trade off: consumes one step of `max_steps`.
+    verbosity_level=LogLevel.DEBUG,  # or OFF, ERROR, INFO, DEBUG
+    return_full_result=True,  # Whether it should return the full result object (including intermediate thoughts, code, observations). Useful for debug.
+    # code_block_tags=("<code>", "</code>"),
+    provide_run_summary=True,  # Whether to provide a run summary when called as a managed agent.
+    # grammar=None,
     step_callbacks=[
         hook_log_progress,
         hook_log_step_to_file,
-    ],
+    ],  # Functions / hooks that get called at each step or associated with memory steps. For monitoring/tracing or custom behavior.
+    # final_answer_checks=[],  # A list of callable checks which, just before accepting a final answer, run validations on the answer. If any fails, the agent might try again or indicate failure.
 )
 
 
