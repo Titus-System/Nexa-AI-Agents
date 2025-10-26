@@ -1,0 +1,13 @@
+services:
+  chroma:
+    image: chromadb/chroma:latest
+    container_name: chroma-server
+    restart: no
+    ports:
+      - "${CHROMA_PORT:-8000}:8000"
+    volumes:
+      - ./database/chroma-data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=${ANONYMIZED_TELEMETRY}
+      - CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES}
