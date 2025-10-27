@@ -30,8 +30,153 @@ pre_proc = {
         endereco="Max-Eyth-Straße 1, 74638 Waldenburg".upper(),
         pais="ALEMANHA",
         confidence_score=0.95,
+    ),
+    "CL10C330JB8NNNC": SingleClassification(
+        partnumber = "CL10C330JB8NNNC",
+        description = "Capacitor cerâmico multicamadas (MLCC) de 33pF, 50V, tolerância de ±5%, dielétrico C0G/NP0, encapsulamento 0603 (1608 métrico). Componente para montagem em superfície (SMD) de uso geral.",
+        ncm = "85322410",
+        exception = "00",
+        nve = "--",
+        fabricante = "Samsung Electro-Mechanics",
+        endereco = "150, Maeyeong-ro, Yeongtong-gu, Suwon-si, Gyeonggi-do, República da Coreia",
+        pais = "República da Coreia",
+        confidence_score = 0.98
+    ),
+
+    "CL10B472KB8NNNC": SingleClassification(
+        partnumber = "CL10B472KB8NNNC",
+        description = "Capacitor cerâmico multicamadas (MLCC) de 4.7nF (4700pF), 50V, tolerância de ±10%, dielétrico X7R, encapsulamento 0603 (1608 métrico). Componente SMD de uso geral.",
+        ncm = "85322410",
+        exception = "00",
+        nve = "--",
+        fabricante = "Samsung Electro-Mechanics",
+        endereco = "150, Maeyeong-ro, Yeongtong-gu, Suwon-si, Gyeonggi-do, República da Coreia",
+        pais = "República da Coreia",
+        confidence_score = 0.99
+    ),
+    "GRM1885C1H180JA01D": SingleClassification(
+        partnumber = "GRM1885C1H180JA01D",
+        description = "Capacitor cerâmico multicamadas (MLCC) de 18pF, 50V, tolerância de ±5%, dielétrico C0G/NP0, encapsulamento 0603 (1608 métrico). Componente SMD de uso geral.",
+        ncm = "85322410",
+        exception = "00",
+        nve = "--",
+        fabricante = "Murata Manufacturing Co., Ltd.",
+        endereco = "10-1, Higashikotari 1-chome, Nagaokakyo-shi, Kyoto 617-8555, Japão",
+        pais = "Japão",
+        confidence_score = 0.99
+    ),
+    "CL10A106KP8NNNC": SingleClassification(
+        partnumber = "CL10A106KP8NNNC",
+        description = "Capacitor cerâmico multicamadas (MLCC) de 10µF, 10V, tolerância de ±10%, dielétrico X5R, encapsulamento 0603 (1608 métrico). Componente SMD de uso geral.",
+        ncm = "85322410",
+        exception = "00",
+        nve = "--",
+        fabricante = "Samsung Electro-Mechanics",
+        endereco = "150, Maeyeong-ro, Yeongtong-gu, Suwon-si, Gyeonggi-do, República da Coreia",
+        pais = "República da Coreia",
+        confidence_score = 0.99
+    ),
+    "C1608X5R1E106M080AC": SingleClassification(
+        partnumber = "C1608X5R1E106M080AC",
+        description = "Capacitor cerâmico multicamadas (MLCC) de 10µF, 25V, tolerância de ±20%, dielétrico X5R, encapsulamento 0603 (1608 métrico). Componente SMD de uso geral.",
+        ncm = "85322410",
+        exception = "00",
+        nve = "--",
+        fabricante = "TDK Corporation",
+        endereco = "2-5-1 Nihonbashi, Chuo-ku, Tóquio, 103-6128, Japão",
+        pais = "Japão",
+        confidence_score = 0.99
+    ),
+    "NACE100M100V6.3X8TR13F": SingleClassification(
+        partnumber = "NACE100M100V6.3X8TR13F",
+        description = "Capacitor eletrolítico de alumínio de 10µF, 100V, tolerância de ±20%, tipo V-Chip para montagem em superfície (SMD). Faixa de temperatura de -40°C a +85°C.",
+        ncm = "85322200",
+        exception = "00",
+        nve = "--",
+        fabricante = "NIC Components Corp.",
+        endereco = "1 Huntington Quadrangle, Suite 1C10, Melville, NY 11747, EUA",
+        pais = "EUA",
+        confidence_score = 0.95
+    ),
+    "CRCW060320K0FKEA": SingleClassification(
+        partnumber = "CRCW060320K0FKEA",
+        description = "Resistor de filme espesso de 20kΩ, 0.125W (1/8W), tolerância de ±1%, encapsulamento 0603. Componente SMD com qualificação automotiva AEC-Q200.",
+        ncm = "85332190",
+        exception = "00",
+        nve = "--",
+        fabricante = "Vishay Dale",
+        endereco = "63 Lancaster Avenue, Malvern, PA 19355-2143, EUA",
+        pais = "EUA",
+        confidence_score = 0.98
+    ),
+    "ERJ-2RKF2201X": SingleClassification(
+        partnumber = "ERJ-2RKF2201X",
+        description = "Resistor de filme espesso de precisão de 2.2kΩ, 0.1W (1/10W), tolerância de ±1%, encapsulamento 0402 (1005 métrico). Componente SMD de grau automotivo.",
+        ncm = "85332190",
+        exception = "00",
+        nve = "--",
+        fabricante = "Panasonic",
+        endereco = "1006, Kadoma, Kadoma City, Osaka 571-8501, Japão",
+        pais = "Japão",
+        confidence_score = 0.98
+    ),
+    "IRLML6401TRPBF": SingleClassification(
+        partnumber = "IRLML6401TRPBF",
+        description = "Transistor MOSFET de Canal P, -12V, -4.3A, com baixa resistência de condução (RDS(on)) de 50mΩ (máx) a VGS = -4.5V. Encapsulamento SOT-23. Projetado para acionamento por nível lógico.",
+        ncm = "85412120",
+        exception = "00",
+        nve = "--",
+        fabricante = "Infineon Technologies",
+        endereco = "Am Campeon 1-15, 85579 Neubiberg, Alemanha",
+        pais = "Alemanha",
+        confidence_score = 0.98
+    ),
+    "STPS5H100B-TR": SingleClassification(
+        partnumber = "STPS5H100B-TR",
+        description = "Diodo retificador Schottky de alta tensão, 100V, 5A. Baixa queda de tensão direta (730mV @ 5A). Encapsulamento DPAK (TO-252).",
+        ncm = "85411029",
+        exception = "00",
+        nve = "--",
+        fabricante = "STMicroelectronics",
+        endereco = "39 Chemin du Champ-des-Filles, 1228 Plan-les-Ouates, Genebra, Suíça",
+        pais = "Suíça",
+        confidence_score = 0.98
+    ),
+    "ESD7C3.3DT5G": SingleClassification(
+        partnumber = "ESD7C3.3DT5G",
+        description = "Diodo de supressão de tensão transiente (TVS) para proteção contra ESD. Tensão de trabalho de 3.3V, 2 canais unidirecionais. Encapsulamento SOT-723. Qualificação automotiva AEC-Q101.",
+        ncm = "85411029",
+        exception = "00",
+        nve = "--",
+        fabricante = "onsemi",
+        endereco = "5701 North Pima Road, Scottsdale, AZ 85250, EUA",
+        pais = "EUA",
+        confidence_score = 0.98
+    ),
+    "LD1117ADT-TR": SingleClassification(
+        partnumber = "LD1117ADT-TR",
+        description = "Regulador de tensão linear de baixa queda (LDO), positivo, ajustável (1.25V a 15V), com capacidade de corrente de até 1A. Encapsulamento DPAK.",
+        ncm = "85423919",
+        exception = "00",
+        nve = "--",
+        fabricante = "STMicroelectronics",
+        endereco = "39 Chemin du Champ-des-Filles, 1228 Plan-les-Ouates, Genebra, Suíça",
+        pais = "Suíça",
+        confidence_score = 0.99
+    ),
+    "ECS-3225Q-33-260-BS-TR": SingleClassification(
+        partnumber = "ECS-3225Q-33-260-BS-TR",
+        description = "Oscilador de cristal SMD, 26 MHz, saída HCMOS, alimentação de 3.3V. Estabilidade de frequência de ±50ppm na faixa de temperatura de -40°C a +125°C. Encapsulamento 3.2mm x 2.5mm. Qualificação AEC-Q200.",
+        ncm = "85416090",
+        exception = "00",
+        nve = "--",
+        fabricante = "ECS Inc. International",
+        endereco = "15351 West 109th Street, Lenexa, KS 66219, EUA",
+        pais = "EUA",
+        confidence_score = 0.98
     )
 }
+
 
 messages = {
     0: "Pedido de análise recebido",
@@ -78,6 +223,7 @@ def run_batch_simul(data: BatchClassificationRequest, job_id: str):
                 ProgressSchema(current=i, total=total, message=f"[{i}] Processando partnumber {p} com Nexa IA")
             )
             result = pre_proc.get(p, None)
+            time.sleep(2.1)
             if result is not None:
                 redis_publisher.send_partial_result(
                     channel = data.progress_channel,
