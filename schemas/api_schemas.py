@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Any, Dict, Optional
 from pydantic import BaseModel
 
 
@@ -11,7 +11,7 @@ class SingleClassificationRequest(BaseModel):
 
 class BatchClassificationRequest(BaseModel):
     progress_channel: str
-    partnumbers: list[str]
+    partnumbers: Dict[str, Any]
 
 
 class SingleClassification(BaseModel):

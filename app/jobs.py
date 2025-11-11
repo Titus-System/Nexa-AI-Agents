@@ -15,7 +15,8 @@ def start_single_classification_job(data: SingleClassificationRequest, job_id: s
     print(
         f"Iniciando job para partnumber {data.partnumber} no canal {data.progress_channel}"
     )
-    if data.partnumber in ["BC847BLT1G", "88512006119"]:
+    from .simul import pre_proc
+    if data.partnumber in pre_proc.keys():
         run_demo(data, job_id)
         return
     

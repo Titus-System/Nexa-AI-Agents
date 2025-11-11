@@ -215,15 +215,16 @@ def run_single_simul(data: SingleClassificationRequest, job_id: str):
 def run_batch_simul(data: BatchClassificationRequest, job_id: str):
     print(f"Iniciando job para classificação dos partnumbers: {data.partnumbers} no canal {data.progress_channel}")
     total = len(data.partnumbers)
+    partnumbers = [i for i in data.partnumbers.keys()]
     for i in range(total):
-        p = data.partnumbers[i]
+        p = partnumbers[i]
         try:
             redis_publisher.send_progress_update(
                 data.progress_channel,
                 ProgressSchema(current=i, total=total, message=f"[{i}] Processando partnumber {p} com Nexa IA")
             )
             result = pre_proc.get(p, None)
-            time.sleep(2.1)
+            time.sleep(2)
             if result is not None:
                 redis_publisher.send_partial_result(
                     channel = data.progress_channel,
