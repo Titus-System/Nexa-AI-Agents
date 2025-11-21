@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     CUDA_VISIBLE_DEVICES: int
     CHROMA_HOST: str
     CHROMA_PORT: int
+    CHROMA_DEVICE: str
 
     model_config = ConfigDict(env_file=".env", env_file_encoding="utf-8")
 
