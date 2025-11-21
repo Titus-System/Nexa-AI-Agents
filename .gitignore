@@ -216,4 +216,4 @@ __marimo__/
 .streamlit/secrets.toml
 
 # Chroma DB
-database/chroma-data
+database/data
