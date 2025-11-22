@@ -6,8 +6,8 @@ from pydantic import ValidationError
 from redis import Redis
 import redis
 
-from app.jobs import start_single_classification_job
-from schemas.api_schemas import ProgressSchema, SingleClassification, SingleClassificationRequest
+from app.jobs import start_batch_classification_job, start_single_classification_job
+from schemas.api_schemas import BatchClassificationRequest, ProgressSchema, SingleClassification, SingleClassificationRequest
 from .extensions import redis_publisher
 
 app_bp = Blueprint("process", __name__)
@@ -28,4 +28,21 @@ def process_single_partnumber():
     job_thread.start()
 
     print(f"job {job_id} aceito para o partnumber '{data.partnumber}")
+    return jsonify({"job_id": job_id}), 202
+
+
+@app_bp.route("/batch_partnumbers", methods=["POST"])
+def process_batch():
+    try:
+        data = BatchClassificationRequest.model_validate(request.get_json())
+    except ValidationError as e:
+        print(e)
+        return jsonify({"error": "payload inválido"})
+    
+    job_id = f"job-{uuid.uuid4()}"
+
+    job_thread = Thread(target=start_batch_classification_job, args=(data, job_id))
+    job_thread.start()
+
+    print(f"job {job_id} aceito para os partnumbers '{data.partnumbers}")
     return jsonify({"job_id": job_id}), 202

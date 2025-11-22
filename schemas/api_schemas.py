@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Any, Dict, Optional
 from pydantic import BaseModel
 
 
@@ -8,6 +8,10 @@ class SingleClassificationRequest(BaseModel):
     description: Optional[str] = None
     manufacturer: Optional[str] = None
     supplier: Optional[str] = None
+
+class BatchClassificationRequest(BaseModel):
+    progress_channel: str
+    partnumbers: Dict[str, Any]
 
 
 class SingleClassification(BaseModel):
@@ -38,6 +42,15 @@ class UpdateProgressStatus(BaseModel):
     status: str = 'processing'
     job_id: Optional[str] = None
     progress: ProgressSchema
+
+
+class PartialResult(BaseModel):
+    status:str = "partial_result"
+    job_id: Optional[str] = None
+    current: int
+    total: int
+    message: str
+    single_classification: SingleClassification
 
 
 class FailedProcessing(BaseModel):
