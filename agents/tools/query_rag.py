@@ -16,7 +16,7 @@ def query_chroma(query_text: str) -> list[dict]:
     Query the Chroma database for the most semantically similar technical product specifications in Portuguese.
 
     This tool takes an English product description, searches the Chroma vector database,
-    and returns a ranked list of the most relevant matches, including product codes,
+    and returns a ranked list of the most relevant matches, including product NCM and EX codes,
     Portuguese and English descriptions, and similarity scores.
 
     Args:
@@ -25,7 +25,8 @@ def query_chroma(query_text: str) -> list[dict]:
 
     Returns:
         list[dict]: A list of matching product specifications, each represented as a dictionary with the following keys:
-            - code (str): The product classification code.
+            - ncm_code (str): The product NCM classification code.
+            - ex_code (str): The product EX classification code.
             - description_pt (str): The product description in Portuguese.
             - description_en (str): The product description in English.
             - similarity (float): A similarity score between 0 and 1, where 1.0 means an exact semantic match.
@@ -35,31 +36,36 @@ def query_chroma(query_text: str) -> list[dict]:
         Output:query_chroma(query_text)
         [
             {
-                "code": "85369040",
+                "ncm": "85369040",
+                "ex": "0",
                 "description_pt": "Conectores para circuito impresso, para uma tensão não superior a 1.000 V",
                 "description_en": "Connectors for printed circuits,f/tension<=1kv",
                 "similarity": 1.0000
             },
             {
-                "code": "85369050",
+                "ncm": "85369050",
+                "ex": "1",
                 "description_pt": "Terminais de conexão para capacitores, mesmo montados em suporte isolante, para uma tensão não superior a 1.000 V",
                 "description_en": "Connectors for printed circuits,incl.mount.insul.backin",
                 "similarity": 0.3118
             },
             {
-                "code": "85369030",
+                "ncm": "85369030",
+                "ex": "0",
                 "description_pt": "Soquetes para microestruturas eletrônicas, para uma tensão não superior a 1.000 V",
                 "description_en": "Sockets f/electronic microstructures,f/tension<=1kv",
                 "similarity": 0.2745
             },
             {
-                "code": "85369010",
+                "ncm": "85369010",
+                "ex": "0",
                 "description_pt": "Conectores para cabos planos constituídos por condutores paralelos isolados individualmente, para uma tensão não superior a 1.000 V",
                 "description_en": "Connectors f/flat cables parallel conductors, t<=1kv",
                 "similarity": 0.2125
             },
             {
-                "code": "85444200",
+                "ncm": "85444200",
+                "ex": "1",
                 "description_pt": "Outros condutores elétricos tensão <= 100 v, com peças de conexão",
                 "description_en": "Other electric conductors f/tension<=100v, with pieces of connection",
                 "similarity": 0.1357
@@ -95,7 +101,6 @@ def query_chroma(query_text: str) -> list[dict]:
     results = collection.query(query_embeddings=[query_embedding], N_RESULTS=N_RESULTS)
 
     if not results["ids"][0]:
-        print("No results found.")
         return []
 
     output_results = []
@@ -103,19 +108,15 @@ def query_chroma(query_text: str) -> list[dict]:
     for i, (id, metadata, distance) in enumerate(
         zip(results["ids"][0], results["metadatas"][0], results["distances"][0]), 1
     ):
-        code = metadata.get("code", "N/A")
+        ncm = metadata.get("ncm", "N/A")
+        ex = metadata.get("ex", "N/A")
         desc_pt = metadata.get("description_pt", "N/A")
         desc_en = metadata.get("description_en", "N/A")
 
-        print(f"\n🔹 Result {i}:")
-        print(f"   Code:           {code}")
-        print(f"   Description PT: {desc_pt}")
-        print(f"   Description EN: {desc_en}")
-        print(f"   Similarity:     {1 - distance:.4f} (distance: {distance:.4f})")
-
         output_results.append(
             {
-                "code": code,
+                "ncm": ncm,
+                "ex": ex,
                 "description_pt": desc_pt,
                 "description_en": desc_en,
                 "similarity": 1 - distance,
