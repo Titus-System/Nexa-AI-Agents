@@ -25,6 +25,7 @@ with open(sprompt, "r") as stream:
 
 ### AGENTS and Models -----------------------------------------------------------------------------------------------
 model_id = "ollama/qwen2.5:14b"
+# model_id = "ollama/qwen3:8b"
 model_classificator = LiteLLMModel(
     name="classificator",
     model_id=model_id,
@@ -67,23 +68,17 @@ classificator_agent = CodeAgent(
 )
 
 PROMPT_TEMPLATE = """
-Find the most relevant NCM (Nomenclatura Comum do Mercosul) codes for the following product:
+Find the most relevant NCM (Nomenclatura Comum do Mercosul) and EX codes for the following product:
 
-Product description (English): Connectors for printed circuits, for tension <= 1kV
+Product specifications: {{product_specs}}
 """
 
 
 def execute(
-    part_number: str,
-    supplier: str,
-    additional_context: str | dict | list | None = None,
+    product_specs: str,
     prompt: str | None = None,
 ) -> str:
     if prompt is None:
-        prompt = PROMPT_TEMPLATE.format(
-            part_number=part_number,
-            supplier=supplier,
-            additional_context=additional_context,
-        )
+        prompt = PROMPT_TEMPLATE.replace("{{product_specs}}", product_specs)
 
     return classificator_agent.run(prompt)

@@ -69,9 +69,21 @@ chroma run --host localhost --port 8000
 
 ### Popular Banco de Dados com os NCMs
 
-O agente de classificação espera que o banco de dados vetorial armazene os NCMs (Nomenclatura Comum do Mercosul) dos produtos. Assim, é necessário popular o BD com o código, e descrição em português e inglês dos NCMs.
+O agente de classificação espera que o banco de dados vetorial armazene os NCMs (Nomenclatura Comum do Mercosul) e EX (excessão) dos produtos. Assim, é necessário popular o BD com alguns dados relacionados ao NCM e EX.
 
-Para isso, adicione um arquivo CSV no diretório `database` com nome `ncm.csv`. Veja mais sobre ele em [Algumas informações importantes](#algumas-informações-importantes).
+Esses dados podem ser obtidos no site do Comércio Exterior [COMEX](https://comexstat.mdic.gov.br/pt/home). Em seguida, adicione os arquivos à pasta do projeto seguindo as seguintes regras:
+
+- Os arquivos CSV devem ser colocados no diretório `database/data` e serem nomeados: `ncm.csv` e `tipi.csv`.
+- Os arquivos devem possuir codificação **UTF-8** e separador **vírgula** (,).
+- O arquivo `ncm.csv` deve possuir os seguintes campos **com estes nomes**:
+  1. **CO_NCM**: O código NCM
+  2. **NO_NCM_POR**: A descrição em português
+  3. **NO_NCM_ING**: A descrição em inglês
+- O arquivo `tipi.csv` deve possuir os seguintes campos **com estes nomes**:
+  1. **NCM**: O código NCM
+  2. **EX**: O código EX
+
+Veja mais sobre esses dados em [Algumas informações importantes](#algumas-informações-importantes).
 
 E execute o seguinte comando:
 
@@ -83,14 +95,11 @@ Esse programa irá criar os embeddings dos dados contidos no arquivo CSV e guard
 
 #### Algumas informações importantes
 
-- O arquivo CSV deve ter o caminho `database/ncm.csv`.
-- O arquivo CSV deve possuir codificação **UTF-8** e separador **vírgula** (,).
-- O arquivo CSV deve possuir os seguintes campos **em ordem**:
-  1. O código NCM
-  2. A descrição em português
-  3. A descrição em inglês
 - **Campo de Embedding**: A descrição do NCM em inglês será o campo utilizado para a pesquisa no BD. **Deve ser a coluna 3 do CSV**.
-- **Campos retornados**: Após encontrar resultados, o BD irá retornar o código NCM, que deve ser a **coluna 1** do CSV, e a descrição do NCM em Português, que deve ser a **coluna 2** do CSV.
+- **Campos retornados**: Após encontrar resultados, o BD irá retornar
+  - o código NCM
+  - o código EX
+  - a descrição do NCM em Português
 
 ## Executar
 
