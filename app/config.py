@@ -24,11 +24,11 @@ class Settings(BaseSettings):
     OLLAMA_URI: str = "http://127.0.0.1:11434"
     OLLAMA_NUM_PARALLEL: int = 4
 
-    ANONYMIZED_TELEMETRY: bool
-    CUDA_VISIBLE_DEVICES: int
-    CHROMA_HOST: str
-    CHROMA_PORT: int
-    CHROMA_DEVICE: str
+    ANONYMIZED_TELEMETRY: bool = False
+    CUDA_VISIBLE_DEVICES: int = -1
+    CHROMA_HOST: str = "localhost"
+    CHROMA_PORT: int = 8000
+    CHROMA_DEVICE: str = "cpu"
 
     model_config = ConfigDict(env_file=".env", env_file_encoding="utf-8")
 

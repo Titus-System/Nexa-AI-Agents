@@ -23,7 +23,7 @@ class RedisPublisher:
         self.redis_client.publish(channel, json.dumps(update.model_dump()))
 
 
-    def send_partial_result(self, channel:str, result: SingleClassification, job_id:str, current:int, total:int, message:str):
+    def send_partial_result(self, channel:str, result: SingleClassification | str, job_id:str, current:int, total:int, message:str):
         print(f"Enviando resultado parcial para o canal {channel}")
         payload = PartialResult(
             status = "partial_result",

@@ -1,14 +1,10 @@
 from threading import Thread
-import time
 import uuid
-from flask import Blueprint, json, request, jsonify
+from flask import Blueprint, request, jsonify
 from pydantic import ValidationError
-from redis import Redis
-import redis
 
 from app.jobs import start_batch_classification_job, start_single_classification_job
-from schemas.api_schemas import BatchClassificationRequest, ProgressSchema, SingleClassification, SingleClassificationRequest
-from .extensions import redis_publisher
+from schemas.api_schemas import BatchClassificationRequest, SingleClassificationRequest
 
 app_bp = Blueprint("process", __name__)
 

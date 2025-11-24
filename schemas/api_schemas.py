@@ -50,7 +50,7 @@ class PartialResult(BaseModel):
     current: int
     total: int
     message: str
-    single_classification: SingleClassification
+    single_classification: SingleClassification | str
 
 
 class FailedProcessing(BaseModel):
